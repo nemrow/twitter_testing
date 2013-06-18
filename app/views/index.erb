@@ -1,4 +1,8 @@
 <div class="container">
+
+
+<% if session[:user_id] %>
+  <button><a href="/logout">Sign Out</a></button>
   <h1>Twitter Time!</h1>
 
   <form class="tweet-it" method="post" action="/tweet">
@@ -11,5 +15,11 @@
       <div class="tweet-list">
         <%= erb :_tweet_list, :locals => {:timelime => 'timeline'} %>
       </div>
+    </div>
   </div>
-</div>
+
+  <% else %>
+
+    <button><a href="/sign_in">Sign In with Twitter</a></button>
+
+  <% end %>
