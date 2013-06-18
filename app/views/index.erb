@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>Twitter Time!</h1>
+
+  <form class="tweet-it" method="post" action="/tweet">
+    <input type="text" placeholder="Tweet!" name="tweet">
+    <input type="submit" value="Tweet it!">
+  </form>
+
+  <div class="tweet-container">
+    <img class="waiting-cow" src="img/waiting.gif">
+      <div class="tweet-list">
+        <%= erb :_tweet_list, :locals => {:timelime => 'timeline'} %>
+      </div>
+  </div>
+</div>
