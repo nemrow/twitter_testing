@@ -5,7 +5,10 @@ class CreateUsers < ActiveRecord::Migration
   		u.string :access_secret
   		u.string :user_id
   		u.string :screen_name
+
   		u.timestamps
   	end
+
+    add_index :users, :user_id
   end
 end

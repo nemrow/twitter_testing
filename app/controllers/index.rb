@@ -11,16 +11,17 @@ end
 post '/tweet' do
 	if session[:user_id]
 		@user = User.find(session[:user_id])
-		twitter_client = Twitter::Client.new(
-		  :oauth_token => @user.access_token,
-		  :oauth_token_secret => @user.access_secret
-		)
-		Thread.new{twitter_client.update(params[:tweet])}
-		@timeline = Twitter.user_timeline(@user.screen_name)
+    job_id = @user.tweet(params[:tweet])
 	else
 		# erb :error_page
 	end
-	erb :_tweet_list
+	job_id
+end
+  
+post '/display_tweets' do
+  @user = User.find(session[:user_id])
+  @timeline = Twitter.user_timeline(@user.screen_name)
+  erb :_tweet_list
 end
 
 get '/sign_in' do
@@ -51,4 +52,10 @@ get '/auth' do
   redirect to '/'
   
 end
+
+get '/status/:job_id' do
+  p params[:job_id]
+  worker_complete = TweetWorker.job_is_complete(:job_id).to_json 
+end
+
 
